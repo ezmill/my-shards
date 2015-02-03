@@ -77,7 +77,7 @@ var shader;
     //     console.log(meshes);
     //     scene.add(meshes[i]);
     // }
-
+//test
 })();
 init();
 animate();
