@@ -1,0 +1,82 @@
+<html>
+	<head>
+		<title>MY SHARDS | EZRA MILLER</title>
+		<style>
+			body{
+				background: black;
+				margin: 0;
+			}
+			.path {
+			-webkit-stroke: "#ffffff";
+			stroke-dasharray: 600;
+			stroke-dashoffset: 0;
+			-webkit-animation: dash 1s ease-in alternate infinite;
+			}
+			@-webkit-keyframes dash {
+			from {
+			stroke-dashoffset: 600;
+			}
+			to {
+			stroke-dashoffset: 0;
+			}
+			}
+			svg{
+				display: none;
+				margin: auto;
+				margin-top: 40vh;
+				z-index: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<script id="fragment_shader_screen" type="x-shader/x-fragment">
+
+			varying vec2 vUv;
+			uniform sampler2D tDiffuse;
+
+			void main() {
+
+				gl_FragColor = texture2D( tDiffuse, vUv );
+
+			}
+
+		</script>
+
+		<script id="fragment_shader_pass_1" type="x-shader/x-fragment">
+
+			varying vec2 vUv;
+			uniform float time;
+
+			void main() {
+
+				float r = vUv.x;
+				if( vUv.y < 0.5 ) r = 0.0;
+				float g = vUv.y;
+				if( vUv.x < 0.5 ) g = 0.0;
+
+				gl_FragColor = vec4( r, g, time, 1.0 );
+
+			}
+
+		</script>
+
+		<script id="vertexShader" type="x-shader/x-vertex">
+
+			varying vec2 vUv;
+
+			void main() {
+
+				vUv = uv;
+				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+			}
+
+		</script>
+		<div id="container"></div>
+		<script src="js/three.min.js"></script>
+		<script src="js/BinaryLoader.js"></script>
+		<script src="js/Detector.js"></script>
+		<script src="js/stats.min.js"></script>
+		<script src="js/rtTest.js"></script>
+	</body>
+</html>
