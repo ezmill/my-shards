@@ -22,6 +22,8 @@ var textureCube;
 var textureCube1;
 var shardMaterial;
 var shader;
+var rotObjs = [];
+var shards = [];
 
 (function(){
     var r = "textures/textureCube/";
@@ -34,30 +36,66 @@ var shader;
         }
         urlArray.push(cube);
     }
+    diamondsArray = [];
+    for(var j = 1; j<12; j++){
+        // var diamondTex = new THREE.ImageUtils.loadTexture("textures/diamonds/diamond" + j + ".jpg");
+        // diamondsArray.push(diamondTex);
+        var cube = [];
+        for (var i = 0; i < 6; i++) {
+            var string = j + ".jpg";
+            cube.push("textures/diamonds/diamond" + string);
+        }
+        diamondsArray.push(cube);
+    }
 
 
     textureCubes = [];
     for(var i = 0; i < urlArray.length; i++){
         var textureCube = THREE.ImageUtils.loadTextureCube(urlArray[i], THREE.CubeRefractionMapping);
+        // var textureCube = THREE.ImageUtils.loadTextureCube(diamondsArray[i], THREE.CubeRefractionMapping);
         textureCubes.push(textureCube);
     }
     materials = [];
     for(var i = 0; i < textureCubes.length; i++){
        var shardMaterial = new THREE.MeshBasicMaterial({
             color: 0xffffff,
+            // map: diamondsArray[i]
             envMap: textureCubes[i],
-            refractionRatio: 0.67,
-            reflectivity: 0.95
+            // refractionRatio: 0.67,
+            // reflectivity: 0.95
         });
+       shardMaterial.needsUpdate = true;
        materials.push(shardMaterial);
-       console.log(materials);
     }
     loader = new THREE.BinaryLoader(true);
     // document.body.appendChild(loader.statusDomElement);
-    for(var i = 0; i < 2; i++){
-    loader.load('models/glass-model.js', function(geometry, materials[i]) {
-        createScene(geometry, materials[i]);
-    });
+    // for(var i = 0; i < 2; i++){
+    // loader.load('models/glass-model.js', function(geometry) {
+    //     createScene(geometry, materials[0]);
+    // });
+    // for(var i = 1; i < 10; i++){
+    //     // loader.load('models/shards/'+i+'.js', function(geometry) {
+    //     //     createScene(geometry, materials[0]);
+    //     // });
+    //     var i = 0;
+
+    //     loader.load('models/shards/'+i+'.js', function(geometry, material, index) {
+    //         // createScene(geometry, materials[0]);
+    //         console.log(geometry);
+    //         console.log(material);
+    //         console.log(i);
+    //     });
+    // }
+    loader.load( "models/shards/1.js", function( geometry ) { createScene( geometry, materials[1], 1 ) } ); 
+    loader.load( "models/shards/2.js", function( geometry ) { createScene( geometry, materials[2], 2 ) } ); 
+    loader.load( "models/shards/3.js", function( geometry ) { createScene( geometry, materials[3], 3 ) } ); 
+    loader.load( "models/shards/4.js", function( geometry ) { createScene( geometry, materials[4], 4 ) } ); 
+    loader.load( "models/shards/5.js", function( geometry ) { createScene( geometry, materials[5], 5 ) } ); 
+    loader.load( "models/shards/6.js", function( geometry ) { createScene( geometry, materials[6], 6 ) } ); 
+    loader.load( "models/shards/7.js", function( geometry ) { createScene( geometry, materials[7], 7 ) } ); 
+    loader.load( "models/shards/8.js", function( geometry ) { createScene( geometry, materials[8], 8 ) } ); 
+    loader.load( "models/shards/9.js", function( geometry ) { createScene( geometry, materials[9], 9 ) } ); 
+    loader.load( "models/shards/10.js",function( geometry ) { createScene( geometry, materials[0], 10 ) } ); 
 
 
         // loader.load('models/glass-model.js', function(geometry) {
@@ -71,13 +109,12 @@ var shader;
         //     // scene.add(rotObj);
         //     // loader.statusDomElement.style.display = "none";
         // });
-    }
+    // }
         
     // for(var i = 0; i < meshes.length; i++){
     //     console.log(meshes);
     //     scene.add(meshes[i]);
     // }
-//test
 })();
 init();
 animate();
@@ -252,19 +289,23 @@ function onWindowResize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
 
 }
-
-function createScene(geometry, material) {
-    // var s = 12.5;
-    var s = 12.5*(Math.random(10,20));
-    console.log(s);
-    var z = -1000;
-    rotObj = new THREE.Object3D();
+function createScene(geometry, material, id) {
+    var s = 1000.0;
+    // var s = 12.5*(Math.random(10,20));
+    var z = -100;
+    var rotObj = new THREE.Object3D();
+    // material.map = diamondsArray[id];
     var shardMesh = new THREE.Mesh(geometry, material);
-    shardMesh.position.z = z;
-    shardMesh.position.y = -600;
+    // shardMesh.frustumCulled = false;
+    shardMesh.position.z = Math.cos(360/id)*1000.0;
+    // shardMesh.position.x = (Math.random()*200 - 100)*id;
+    shardMesh.position.x = Math.sin(360/id)*1000.0;
+    // shardMesh.position.y = -600;
     shardMesh.scale.x = shardMesh.scale.y = shardMesh.scale.z = s;
-    // meshes.push(shardMesh);
-    scene.add(shardMesh);
+    shards.push(shardMesh);
+    rotObj.add(shardMesh);
+    rotObjs.push(rotObj);
+    scene.add(rotObj);
     loader.statusDomElement.style.display = "none";
 
 }
@@ -275,11 +316,14 @@ function onDocumentMouseMove(event) {
     mouseY = (event.clientY - windowHalfY) * 0.25;
 
 }
-
+var counter = 1;
 function onKeyDown(event) {
     if (event.keyCode == "32") {
-        screenshot();
-
+        //screenshot();
+        for(var i = 0; i < shards.length; i++){
+            shards[i].material.envMap = textureCubes[Math.floor(Math.random()*textureCubes.length)];
+        }
+        counter++;
         function screenshot() {
             var blob = dataURItoBlob(renderer.domElement.toDataURL('image/png'));
             var file = window.URL.createObjectURL(blob);
@@ -324,7 +368,9 @@ function render() {
     timer++;
     camera.position.x += (mouseX - camera.position.x) * .05;
     camera.position.y += (-mouseY - camera.position.y) * .05;
-
+    for(var i = 0; i<rotObjs.length;i++){
+        rotObjs[i].rotation.y = Date.now()*0.0004;
+    }
     camera.lookAt(scene.position);
     // console.log(timer);
     if(timer%50 == 0 ){

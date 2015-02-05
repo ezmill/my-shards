@@ -1,0 +1,110 @@
+var container;
+var scene, camera, renderer;
+var loader;
+var shards = [];
+var shardTextures = [];
+var textureCubes = [];
+var materials = [];
+var uiComponents;
+var w = window.innerWidth;
+var h = window.innerHeight;
+var mouseX = 0; 
+var mouseY = 0;
+var index = 0;
+var texture;
+initScene();
+function initScene(){
+	container = document.createElement('div');
+	document.body.appendChild(container);
+	camera = new THREE.OrthographicCamera(w / -2, w / 2, h / 2, h / -2, 1, 100000);
+	// camera.position.z = 500;
+	scene = new THREE.Scene();
+	renderer = new THREE.WebGLRenderer({preserveDrawingBuffer: false});
+	renderer.setSize(w,h);
+	renderer.setClearColor(0xffffff,1);
+	container.appendChild(renderer.domElement);
+	//event listeners
+	// document.addEventListener('mousemove', onDocumentMouseMove, false);
+	document.addEventListener('mousedown', onDocumentMouseDown, false);
+	// window.addEventListener('resize', onWindowResize, false);
+	// texture = initTexture(index);
+	// shardTexs();
+	SHARD_ME(index);
+	animate();
+}
+// function shardTexs(){
+// 	for(var j = 0; j < 56; j++){
+// 		var urls= [];
+// 		for (var i = 0; i < 6; i++) {
+// 	        var url = "textures/diamonds/diamond" + (i+1) + ".jpg";
+// 	        // var url = "textures/textureCube/" + (i+1) + ".jpg";
+// 	        urls.push(url);
+// 	    }
+// 	    var texture = THREE.ImageUtils.loadTextureCube(urls, THREE.CubeRefractionMapping);
+// 	    shardTextures.push(texture);
+// 	}
+// }
+// var texture = initTexture(index);
+
+function SHARD_ME(index){
+	var texture = initTexture(index);
+	var material = initMaterial(index, texture);
+	// var material = initMaterial(index, shardTextures[index]);
+	loadShard(index, material);
+}
+function initTexture(index){
+	var urls = [];
+	for (var i = 0; i < 6; i++) {
+        var url = "textures/diamonds/diamond" + (index+1) + ".jpg";
+        // var url = "textures/textureCube/" + (index+1) + ".jpg";
+        // var url = "textures/textureCube/1.jpg";
+        urls.push(url)
+    }
+    var texture = THREE.ImageUtils.loadTextureCube(urls, THREE.CubeRefractionMapping);
+    return texture;
+}
+function initMaterial(index, texture){
+	var params = {
+		color: 0xffffff,
+		envMap: texture,
+		refractionRatio: 0.67,
+		reflectivity: 0.95
+	}
+	var material = new THREE.MeshBasicMaterial(params)
+	return material;
+}
+function loadShard(index, material){
+	loader = new THREE.BinaryLoader(true);
+	loader.load("models/shards/"+(index+1)+".js", function(geometry){
+		createShard(index, geometry, material);
+	});
+}
+function createShard(index, geometry, material){
+	var shard = new THREE.Mesh(geometry, material);
+	shard.position.set(0,0,-1000);
+	var scale = 10000.0;
+	shard.scale.set(scale,scale,scale);
+	scene.add(shard);
+	shards.push(shard);
+}
+function checkViewport(shard){
+
+}
+function onDocumentMouseDown(){
+	// shards[index-1].material.dispose();
+	// shards[index-1].geometry.dispose();
+	scene.remove(shards[index]);
+	index++;
+	SHARD_ME(index);
+}
+function animate(){
+	requestAnimationFrame(animate);
+    render();
+}
+function render(){
+	camera.lookAt(scene.position);
+	if(index == 56){
+		index = 0;
+	}
+	renderer.render(scene, camera);
+}
