@@ -59,7 +59,7 @@ function initTexture(index){
 	for (var i = 0; i < 6; i++) {
         // var url = "textures/diamonds/diamond" + (index+1) + ".jpg";
         // var url = "textures/textureCube/" + (index+1) + ".jpg";
-        var url = "textures/textureCube/5.jpg";
+        var url = "textures/textureCube/1.jpg";
         urls.push(url)
     }
     var texture = THREE.ImageUtils.loadTextureCube(urls, THREE.CubeRefractionMapping);
