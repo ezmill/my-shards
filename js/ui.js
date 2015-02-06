@@ -27,9 +27,11 @@ function initScene(){
 	// document.addEventListener('mousemove', onDocumentMouseMove, false);
 	document.addEventListener('mousedown', onDocumentMouseDown, false);
 	// window.addEventListener('resize', onWindowResize, false);
-	// texture = initTexture(index);
+	texture = initTexture(index);
 	// shardTexs();
-	SHARD_ME(index);
+	for(var i = 0; i < 56; i++){
+		SHARD_ME(i);
+	}
 	animate();
 }
 // function shardTexs(){
@@ -44,10 +46,10 @@ function initScene(){
 // 	    shardTextures.push(texture);
 // 	}
 // }
-// var texture = initTexture(index);
+var texture = initTexture(index);
 
 function SHARD_ME(index){
-	var texture = initTexture(index);
+	// var texture = initTexture(index);
 	var material = initMaterial(index, texture);
 	// var material = initMaterial(index, shardTextures[index]);
 	loadShard(index, material);
@@ -55,9 +57,9 @@ function SHARD_ME(index){
 function initTexture(index){
 	var urls = [];
 	for (var i = 0; i < 6; i++) {
-        var url = "textures/diamonds/diamond" + (index+1) + ".jpg";
+        // var url = "textures/diamonds/diamond" + (index+1) + ".jpg";
         // var url = "textures/textureCube/" + (index+1) + ".jpg";
-        // var url = "textures/textureCube/1.jpg";
+        var url = "textures/textureCube/1.jpg";
         urls.push(url)
     }
     var texture = THREE.ImageUtils.loadTextureCube(urls, THREE.CubeRefractionMapping);
@@ -67,7 +69,7 @@ function initMaterial(index, texture){
 	var params = {
 		color: 0xffffff,
 		envMap: texture,
-		refractionRatio: 0.67,
+		refractionRatio: 0.3,
 		reflectivity: 0.95
 	}
 	var material = new THREE.MeshBasicMaterial(params)
@@ -81,8 +83,11 @@ function loadShard(index, material){
 }
 function createShard(index, geometry, material){
 	var shard = new THREE.Mesh(geometry, material);
-	shard.position.set(0,0,-1000);
-	var scale = 10000.0;
+	// var shard = new THREE.Mesh(boxGeom, material);
+	// shard.position.set(0,0,-1000);
+	// shard.position.set(Math.random()*1500.0 -1000.0,Math.random()*1500.0 -1000.0,-1000);
+	shard.position.set(200*(index%8)-600,90*(index/7)-340,-1000);
+	var scale = 5000.0;
 	shard.scale.set(scale,scale,scale);
 	scene.add(shard);
 	shards.push(shard);
@@ -93,9 +98,10 @@ function checkViewport(shard){
 function onDocumentMouseDown(){
 	// shards[index-1].material.dispose();
 	// shards[index-1].geometry.dispose();
-	scene.remove(shards[index]);
-	index++;
-	SHARD_ME(index);
+	// scene.remove(shards[index]);
+	// index++;
+	// SHARD_ME(index);
+	// texture.envMap = load
 }
 function animate(){
 	requestAnimationFrame(animate);
@@ -106,5 +112,10 @@ function render(){
 	if(index == 56){
 		index = 0;
 	}
+	for(var i = 0; i < shards.length; i++){
+		shards[i].rotation.x = Date.now()*0.00003;
+		shards[i].rotation.y = Date.now()*0.00003;
+		shards[i].rotation.z = Date.now()*0.00003;
+	}	
 	renderer.render(scene, camera);
 }

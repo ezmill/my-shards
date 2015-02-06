@@ -29,75 +29,12 @@
 		</style>
 	</head>
 	<body>
-		<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-		width="100px" height="100px" viewBox="0 0 196.816 203" enable-background="new 0 0 196.816 203" xml:space="preserve">
-		<image display="none" overflow="visible" width="2880" height="1486" xlink:href="../../../../../../../../Users/ezmill/Desktop/35437d5a-51d2-4f72-a7b2-c95c6e014956.png"  transform="matrix(1 0 0 1 -1081.3535 -701.4746)">
-		</image>
-		<g>
-		<polygon class="path" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" points="1089.139,-236.845 1335.018,-258.67
-		1159.071,-170.475 	"/>
-		<polygon class="path" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" points="1143.034,-370.475 1335.018,-258.67
-		1089.139,-236.845 	"/>
-		<polygon class="path" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" points="1335.018,-258.67 1313.193,-224.371
-		1159.071,-170.475 	"/>
-		</g>
-		<g>
-		<polygon class="path" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" points="45.315,109.231 159.749,27.272
-		195.316,182.942 	"/>
-		<polygon class="path" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" points="149.954,201.5 195.316,182.942
-		45.315,109.231 	"/>
-		<polygon class="path" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" points="40.16,159.231 45.315,109.231
-		149.954,201.5 	"/>
-		<polygon class="path" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" points="1.5,119.026 10.263,70.572 40.16,159.231
-		"/>
-		<polygon class="path" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" points="71.088,1.5 45.315,109.231 10.263,70.572
-		"/>
-		<polygon class="path" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" points="159.749,27.272 71.088,1.5
-		45.315,109.231 	"/>
-		</g>
-		<g>
-		<polygon class="path" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" points="346.334,205.107 341.159,155.939
-		326.371,171.096 	"/>
-		<polygon class="path" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" points="382.193,47.991 346.334,205.107
-		341.159,155.939 	"/>
-		<polygon class="path" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" points="302.342,32.464 326.371,171.096
-		341.159,155.939 	"/>
-		<polygon class="path" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" points="343.007,10.283 302.342,32.464
-		382.193,47.991 	"/>
-		<polygon class="path" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" points="384.781,5.107 382.193,47.991
-		343.007,10.283 	"/>
-		</g>
-		</svg>
 
-		<script id="fragment_shader_screen" type="x-shader/x-fragment">
-
-			varying vec2 vUv;
-			uniform sampler2D tDiffuse;
-
-			void main() {
-
-				gl_FragColor = texture2D( tDiffuse, vUv );
-
-			}
-
-		</script>
-
-		<script id="vertexShader" type="x-shader/x-vertex">
-
-			varying vec2 vUv;
-
-			void main() {
-
-				vUv = uv;
-				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-
-			}
-		</script>
 
 		<script src="js/three.min.js"></script>
 		<script src="js/BinaryLoader.js"></script>
 		<script src="js/Detector.js"></script>
 		<script src="js/stats.min.js"></script>
-		<script src="js/main.js"></script>
+		<script src="js/ui.js"></script>
 	</body>
 </html>
