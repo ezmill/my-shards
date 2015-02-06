@@ -80,9 +80,12 @@ function initMaterial(index, texture){
 }
 function loadShard(index, material){
 	loader = new THREE.BinaryLoader(true);
-	loader.load("models/shards/"+(index+1)+".js", function(geometry){
-		createShard(index, geometry, material);
-	});
+	if(material){
+		loader.load("models/shards/"+(index+1)+".js", function(geometry){
+			createShard(index, geometry, material);
+		});
+	}
+
 }
 function createShard(index, geometry, material){
 	var shard = new THREE.Mesh(geometry, material);
