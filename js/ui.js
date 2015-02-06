@@ -46,7 +46,7 @@ function initScene(){
 // 	    shardTextures.push(texture);
 // 	}
 // }
-var texture = initTexture(index);
+// var texture = initTexture(index);
 
 function SHARD_ME(index){
 	// var texture = initTexture(index);
@@ -59,7 +59,7 @@ function initTexture(index){
 	for (var i = 0; i < 6; i++) {
         // var url = "textures/diamonds/diamond" + (index+1) + ".jpg";
         // var url = "textures/textureCube/" + (index+1) + ".jpg";
-        var url = "textures/textureCube/1.jpg";
+        var url = "textures/textureCube/5.jpg";
         urls.push(url)
     }
     var texture = THREE.ImageUtils.loadTextureCube(urls, THREE.CubeRefractionMapping);
