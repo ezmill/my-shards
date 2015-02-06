@@ -17,6 +17,8 @@ function initScene(){
 	container = document.createElement('div');
 	document.body.appendChild(container);
 	camera = new THREE.OrthographicCamera(w / -2, w / 2, h / 2, h / -2, 1, 100000);
+    // camera = new THREE.PerspectiveCamera(50, w / h, 1, 100000);
+
 	// camera.position.z = 500;
 	scene = new THREE.Scene();
 	renderer = new THREE.WebGLRenderer({preserveDrawingBuffer: false});
@@ -29,7 +31,7 @@ function initScene(){
 	// window.addEventListener('resize', onWindowResize, false);
 	texture = initTexture(index);
 	// shardTexs();
-	for(var i = 0; i < 56; i++){
+	for(var i = 0; i < 55; i++){
 		SHARD_ME(i);
 	}
 	animate();
@@ -50,9 +52,8 @@ function initScene(){
 
 function SHARD_ME(index){
 	// var texture = initTexture(index);
-	var material = initMaterial(index, texture);
+	initMaterial(index, texture);
 	// var material = initMaterial(index, shardTextures[index]);
-	loadShard(index, material);
 }
 function initTexture(index){
 	var urls = [];
@@ -73,7 +74,9 @@ function initMaterial(index, texture){
 		reflectivity: 0.95
 	}
 	var material = new THREE.MeshBasicMaterial(params)
-	return material;
+	// return material;
+	loadShard(index, material);
+
 }
 function loadShard(index, material){
 	loader = new THREE.BinaryLoader(true);
