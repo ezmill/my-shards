@@ -31,7 +31,7 @@ function initScene(){
 	// window.addEventListener('resize', onWindowResize, false);
 	texture = initTexture(index);
 	// shardTexs();
-	for(var i = 0; i < 55; i++){
+	for(var i = 0; i < 54; i++){
 		SHARD_ME(i);
 	}
 	animate();
