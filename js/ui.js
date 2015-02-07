@@ -11,6 +11,7 @@ var h = window.innerHeight;
 var mouseX = 0; 
 var mouseY = 0;
 var index = 0;
+var init = true;
 var texture;
 initScene();
 function initScene(){
@@ -29,7 +30,7 @@ function initScene(){
 	// document.addEventListener('mousemove', onDocumentMouseMove, false);
 	document.addEventListener('mousedown', onDocumentMouseDown, false);
 	// window.addEventListener('resize', onWindowResize, false);
-	texture = initTexture(index);
+	texture = initTexture(index, init);
 	// shardTexs();
 	// for(var i = 0; i < 54; i++){
 	// 	SHARD_ME(i);
@@ -62,12 +63,12 @@ function initTexture(index){
 	var urls = [];
 	for (var i = 0; i < 6; i++) {
         // var url = "textures/diamonds/diamond" + (index+1) + ".jpg";
-        // var url = "textures/textureCube/" + (index+1) + ".jpg";
-        var url = "textures/textureCube/1.jpg";
+        var url = "textures/textureCube/" + (index+1) + ".jpg";
+        // var url = "textures/textureCube/2.jpg";
         urls.push(url)
     }
     var texture = THREE.ImageUtils.loadTextureCube(urls, THREE.CubeRefractionMapping, function(t){
-    	SHARD_ME(t);
+			SHARD_ME(t);
     });
     // return texture;
 }
@@ -110,9 +111,20 @@ function onDocumentMouseDown(){
 	// shards[index-1].material.dispose();
 	// shards[index-1].geometry.dispose();
 	// scene.remove(shards[index]);
-	// index++;
+	index++;
 	// SHARD_ME(index);
-	// texture.envMap = load
+	var urls = [];
+	for (var i = 0; i < 6; i++) {
+        // var url = "textures/diamonds/diamond" + (index+1) + ".jpg";
+        var url = "textures/textureCube/" + (index+1) + ".jpg";
+        // var url = "textures/textureCube/2.jpg";
+        urls.push(url)
+    }
+    var newTex =THREE.ImageUtils.loadTextureCube(urls, THREE.CubeRefractionMapping);
+	for(var i = 0; i< shards.length; i++){
+		shards[i].material.envMap = newTex;
+	}
+	// texture.envMap = initTexture(index);
 }
 function animate(){
 	requestAnimationFrame(animate);
