@@ -31,9 +31,9 @@ function initScene(){
 	// window.addEventListener('resize', onWindowResize, false);
 	texture = initTexture(index);
 	// shardTexs();
-	for(var i = 0; i < 54; i++){
-		SHARD_ME(i);
-	}
+	// for(var i = 0; i < 54; i++){
+	// 	SHARD_ME(i);
+	// }
 	animate();
 }
 // function shardTexs(){
@@ -50,9 +50,12 @@ function initScene(){
 // }
 // var texture = initTexture(index);
 
-function SHARD_ME(index){
+function SHARD_ME(texture){
 	// var texture = initTexture(index);
-	initMaterial(index, texture);
+	for(var index = 0; index<55; index++){
+			initMaterial(index, texture);
+
+	}
 	// var material = initMaterial(index, shardTextures[index]);
 }
 function initTexture(index){
@@ -63,8 +66,10 @@ function initTexture(index){
         var url = "textures/textureCube/1.jpg";
         urls.push(url)
     }
-    var texture = THREE.ImageUtils.loadTextureCube(urls, THREE.CubeRefractionMapping);
-    return texture;
+    var texture = THREE.ImageUtils.loadTextureCube(urls, THREE.CubeRefractionMapping, function(t){
+    	SHARD_ME(t);
+    });
+    // return texture;
 }
 function initMaterial(index, texture){
 	var params = {
