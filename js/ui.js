@@ -6,8 +6,10 @@ var shardTextures = [];
 var textureCubes = [];
 var materials = [];
 var uiComponents;
+// var w = 1440;
 var w = window.innerWidth;
 var h = window.innerHeight;
+// var h = 800;
 var mouseX = 0; 
 var mouseY = 0;
 var index = 0;
@@ -25,12 +27,14 @@ function initScene(){
 	renderer = new THREE.WebGLRenderer({preserveDrawingBuffer: false});
 	renderer.setSize(w,h);
 	renderer.setClearColor(0xffffff,1);
+	// renderer.domElement.style.width = "100%";
+	// renderer.domElement.style.height = "100%";
 	container.appendChild(renderer.domElement);
 	//event listeners
 	// document.addEventListener('mousemove', onDocumentMouseMove, false);
 	document.addEventListener('mousedown', onDocumentMouseDown, false);
 	// window.addEventListener('resize', onWindowResize, false);
-	texture = initTexture(index, init);
+	texture = initTexture(index);
 	// shardTexs();
 	// for(var i = 0; i < 54; i++){
 	// 	SHARD_ME(i);
@@ -107,6 +111,10 @@ function createShard(index, geometry, material){
 function checkViewport(shard){
 
 }
+function map(value,max,minrange,maxrange) {
+    return ((max-value)/(max))*(maxrange-minrange)+minrange;
+}
+
 function onDocumentMouseDown(){
 	// shards[index-1].material.dispose();
 	// shards[index-1].geometry.dispose();
