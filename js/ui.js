@@ -42,7 +42,6 @@ function initScene(){
 	document.addEventListener('mousemove', onDocumentMouseMove, false);
 	renderer.domElement.addEventListener('mousedown', onDocumentMouseDown, false);
 	window.addEventListener('resize', onWindowResize, false);
-	shardTexs();
 	texture = initTexture(index);
 
 	animate();
@@ -77,6 +76,7 @@ function initTexture(index){
         urls.push(url)
     }
     var texture = THREE.ImageUtils.loadTextureCube(urls, THREE.CubeRefractionMapping, function(t){
+    		shardTexs();
 			SHARD_ME(t);
 	    	// createSkyBox(t);
     });
