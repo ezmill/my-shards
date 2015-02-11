@@ -78,7 +78,7 @@ function initTexture(index){
     }
     var texture = THREE.ImageUtils.loadTextureCube(urls, THREE.CubeRefractionMapping, function(t){
 			SHARD_ME(t);
-	    	createSkyBox(t);
+	    	// createSkyBox(t);
     });
     // return texture;
 }
@@ -124,8 +124,8 @@ function createShard(index, geometry, material){
 	// var shard = new THREE.Mesh(boxGeom, material);
 	// shard.position.set(0,0,-1000);
 	// shard.position.set(Math.random()*1500.0 -1000.0,Math.random()*1500.0 -1000.0,-1000);
-	shard.position.set(200*(index%8)-600,90*(index/7)-340,-1000);
-	// shard.position.set((w/8)*(index%8)-(w/2.25),(h/7)*(index%7)-(h/2.4),-1000);
+	// shard.position.set(200*(index%8)-600,90*(index/7)-340,-1000);
+	shard.position.set((w/8)*(index%8)-(w/2.25),(h/7)*(index%7)-(h/2.4),-1000);
 	// var scale = (1+(w/h))*2000.0;
 	var scale = 5000.0;
 	shard.scale.set(scale,scale,scale);
@@ -156,7 +156,7 @@ function onDocumentMouseDown(){
 	for(var i = 0; i< shards.length; i++){
 		shards[i].material.envMap = newTex;
 	}
-		shader.uniforms[ "tCube" ].value = newTex;
+		// shader.uniforms[ "tCube" ].value = newTex;
 
 	// texture.envMap = initTexture(index);
 }
@@ -182,6 +182,10 @@ function onWindowResize() {
 	renderer.setSize( window.innerWidth, window.innerHeight );
 
 }
+function easeInOutCubic(t) { 
+  // return 1+(--t)*t*t*t*t;
+  return t;
+}
 function animate(){
 	requestAnimationFrame(animate);
     render();
@@ -194,9 +198,9 @@ function render(){
 	}
 	for(var i = 0; i < shards.length; i++){
 		shards[i].rotation.x = Date.now()*0.00003+(mouseX/(mouseY*10.0));
-		shards[i].rotation.y = Date.now()*0.00003+mouseY;
+		shards[i].rotation.y = Date.now()*0.00003+easeInOutCubic(mouseY);
 		// shards[i].rotation.z = Date.now()*0.00003;
-		shards[i].rotation.z = Date.now()*0.00003+mouseX;
+		shards[i].rotation.z = Date.now()*0.00003+easeInOutCubic(mouseX);
 	}	
 
 	renderer.render(sceneCube, cameraCube);
