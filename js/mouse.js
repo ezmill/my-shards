@@ -231,10 +231,10 @@ function onDocumentTouchMove( event ) {
                 event.preventDefault();
  
                 mouseX = event.touches[ 0 ].pageX - windowHalfX;
-                targetRotationX = targetRotationOnMouseDownX + ( mouseX - mouseXOnMouseDown ) * 0.05;
+                targetRotationX = targetRotationOnMouseDownX + ( mouseX - mouseXOnMouseDown ) * 0.001;
  
                 mouseY = event.touches[ 0 ].pageY - windowHalfY;
-                targetRotationY = targetRotationOnMouseDownY + (mouseY - mouseYOnMouseDown) * 0.05;
+                targetRotationY = targetRotationOnMouseDownY + (mouseY - mouseYOnMouseDown) * 0.001;
  
         }
  
