@@ -76,6 +76,8 @@ function initScene(){
 	container.appendChild(renderer.domElement);
 	//event listeners
 	document.addEventListener('mousemove', onDocumentMouseMove, false);
+	document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+    document.addEventListener( 'touchmove', onDocumentTouchMove, false );
 	renderer.domElement.addEventListener('mousedown', onDocumentMouseDown, false);
 	window.addEventListener('resize', onWindowResize, false);
 	texture = initTexture(index);
@@ -209,6 +211,36 @@ function onDocumentMouseMove(event) {
         targetRotationY = targetRotationOnMouseDownY + (mouseY - mouseYOnMouseDown) * 0.001;
         targetRotationX = targetRotationOnMouseDownX + (mouseX - mouseXOnMouseDown) * 0.001;
 }
+function onDocumentTouchStart( event ) {
+        if ( event.touches.length == 1 ) {
+ 
+                event.preventDefault();
+ 
+                mouseXOnMouseDown = event.touches[ 0 ].pageX - windowHalfX;
+                targetRotationOnMouseDownX = targetRotationX;
+ 
+                mouseYOnMouseDown = event.touches[ 0 ].pageY - windowHalfY;
+                targetRotationOnMouseDownY = targetRotationY;
+ 
+        }
+}
+function onDocumentTouchMove( event ) {
+ 
+        if ( event.touches.length == 1 ) {
+ 
+                event.preventDefault();
+ 
+                mouseX = event.touches[ 0 ].pageX - windowHalfX;
+                targetRotationX = targetRotationOnMouseDownX + ( mouseX - mouseXOnMouseDown ) * 0.05;
+ 
+                mouseY = event.touches[ 0 ].pageY - windowHalfY;
+                targetRotationY = targetRotationOnMouseDownY + (mouseY - mouseYOnMouseDown) * 0.05;
+ 
+        }
+ 
+}
+
+
 function onWindowResize() {
 
 	windowHalfX = window.innerWidth / 2,
