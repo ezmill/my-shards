@@ -12,6 +12,17 @@ var w = window.innerWidth;
 var h = window.innerHeight;
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
+var targetRotationX = 0;
+var targetRotationOnMouseDownX = 0;
+ 
+var targetRotationY = 0;
+var targetRotationOnMouseDownY = 0;
+ 
+var mouseX = 0;
+var mouseXOnMouseDown = 0;
+ 
+var mouseY = 0;
+var mouseYOnMouseDown = 0;
 // var h = 800;
 var clickCount = 0;
 
@@ -192,11 +203,11 @@ function onDocumentMouseDown(){
 	// texture.envMap = initTexture(index);
 }
 function onDocumentMouseMove(event) {
-    // mouseX = (event.clientX - w/2) * 0.000000000000001;
-    mouseX = (event.clientX + w/2) * 0.00075;
-    // mouseY = (event.clientY - h/2) * 0.000000000000001;
-    mouseY = (event.clientY + h/2) * 0.00125;
-
+		mouseX = event.clientX - windowHalfX;
+        mouseY = event.clientY + windowHalfY;
+ 
+        targetRotationY = targetRotationOnMouseDownY + (mouseY - mouseYOnMouseDown) * 0.001;
+        targetRotationX = targetRotationOnMouseDownX + (mouseX - mouseXOnMouseDown) * 0.001;
 }
 function onWindowResize() {
 
@@ -224,10 +235,10 @@ function render(){
 	camera.lookAt(scene.position);
 	cameraCube.rotation.copy( camera.rotation );
 	for(var i = 0; i < shards.length; i++){
-		shards[i].rotation.x = Date.now()*0.00003;//+(mouseX/(mouseY*10.0));
-		shards[i].rotation.y = Date.now()*0.00003+mouseY;
+		shards[i].rotation.x = Date.now()*0.00008;//+(mouseX/(mouseY*10.0));
+		shards[i].rotation.y += ( targetRotationX - shards[i].rotation.y ) * 0.1;
 		// shards[i].rotation.z = Date.now()*0.00003;
-		shards[i].rotation.z = Date.now()*0.00003+mouseX;
+		shards[i].rotation.z += ( targetRotationY - shards[i].rotation.z ) * 0.1;
 	}
 	
 

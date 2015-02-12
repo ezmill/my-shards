@@ -70,15 +70,33 @@
 				border-bottom: solid 1px white;
 				color: inherit;
 			}
+			#small{
+				font-size: 16px;
+			}
 			.italic{
 				font-style: italic;
+			}
+			@media screen and (max-width: 600px) {
+				.center p {
+					font-size: 2.5em;
+				}
+				.center h1{
+					font-size: 5em;
+				}
+				#small{
+					font-size: 1.5em;
+				}
+				.center{
+					top: 15%;
+				}
+
 			}
 		</style>
 	</head>
 	<body>
 		<a id="shard" onclick="handleShardClick()" href="#">		
 		<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-		width="60px" height="60px" viewBox="0 0 196.816 203" enable-background="new 0 0 196.816 203" xml:space="preserve">
+		width="100px" height="100px" viewBox="0 0 196.816 203" enable-background="new 0 0 196.816 203" xml:space="preserve">
 		<image display="none" overflow="visible" width="2880" height="1486" xlink:href="../../../../../../../../Users/ezmill/Desktop/35437d5a-51d2-4f72-a7b2-c95c6e014956.png"  transform="matrix(1 0 0 1 -1081.3535 -701.4746)">
 		</image>
 		<g>
@@ -122,7 +140,7 @@
 				
 				<p class="italic">Directions: Click for a new texture, move your mouse to rotate</p>
 				<p class="italic">Made by <a target="_blank" href="http://ezramiller.biz">Ezra Miller</a></p>
-				<p class="italic" style="font-size: 16px">Not working? Try reloading the page. MY SHARDS uses WebGL, which requires a modern browser. Download <a href="http://google.com/chrome" style="border-bottom: 1px solid white" target="_blank">Chrome</a> or <a href="https://www.mozilla.org/en-US/firefox/new/" style="border-bottom: 1px solid white" target="_blank">Firefox</a></p></p>
+				<p id="small" class="italic">Not working? Try reloading the page. MY SHARDS uses WebGL, which requires a modern browser. Download <a href="http://google.com/chrome" style="border-bottom: 1px solid white" target="_blank">Chrome</a> or <a href="https://www.mozilla.org/en-US/firefox/new/" style="border-bottom: 1px solid white" target="_blank">Firefox</a></p></p>
 			</div>
 		</div>
 
