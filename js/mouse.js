@@ -76,7 +76,7 @@ function initScene(){
 	container.appendChild(renderer.domElement);
 	//event listeners
 	document.addEventListener('mousemove', onDocumentMouseMove, false);
-	document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+	// document.addEventListener( 'touchstart', onDocumentTouchStart, false );
     document.addEventListener( 'touchmove', onDocumentTouchMove, false );
 	renderer.domElement.addEventListener('mousedown', onDocumentMouseDown, false);
 	window.addEventListener('resize', onWindowResize, false);
